@@ -39,7 +39,8 @@ class LAParams:
                  word_margin=0.1,
                  boxes_flow=0.5,
                  detect_vertical=False,
-                 all_texts=False):
+                 all_texts=False,
+                 grid_size=50):
         self.line_overlap = line_overlap
         self.char_margin = char_margin
         self.line_margin = line_margin
@@ -47,6 +48,7 @@ class LAParams:
         self.boxes_flow = boxes_flow
         self.detect_vertical = detect_vertical
         self.all_texts = all_texts
+        self.grid_size = grid_size
         return
 
     def __repr__(self):
@@ -566,7 +568,7 @@ class LTLayoutContainer(LTContainer):
 
     # group_textlines: group neighboring lines to textboxes.
     def group_textlines(self, laparams, lines):
-        plane = Plane(self.bbox)
+        plane = Plane(self.bbox, laparams.grid_size)
         plane.extend(lines)
         boxes = {}
         for line in lines:
